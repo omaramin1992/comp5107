@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.22)  7 FEB 2018 17:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.22)  8 FEB 2018 11:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -565,97 +565,101 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <x1-x2.png, id=27, 642.4pt x 481.8pt>
 File: x1-x2.png Graphic file (type png)
 <use x1-x2.png>
-Package pdftex.def Info: x1-x2.png  used on input line 199.
+Package pdftex.def Info: x1-x2.png  used on input line 221.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <y1-y2.png, id=28, 642.4pt x 481.8pt>
 File: y1-y2.png Graphic file (type png)
 <use y1-y2.png>
-Package pdftex.def Info: y1-y2.png  used on input line 203.
+Package pdftex.def Info: y1-y2.png  used on input line 225.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <z1-z2.png, id=29, 642.4pt x 481.8pt>
 File: z1-z2.png Graphic file (type png)
 <use z1-z2.png>
-Package pdftex.def Info: z1-z2.png  used on input line 207.
+Package pdftex.def Info: z1-z2.png  used on input line 229.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <v1-v2.png, id=30, 642.4pt x 481.8pt>
 File: v1-v2.png Graphic file (type png)
 <use v1-v2.png>
-Package pdftex.def Info: v1-v2.png  used on input line 211.
+Package pdftex.def Info: v1-v2.png  used on input line 233.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <x1-x3.png, id=31, 642.4pt x 481.8pt>
 File: x1-x3.png Graphic file (type png)
 <use x1-x3.png>
-Package pdftex.def Info: x1-x3.png  used on input line 221.
+Package pdftex.def Info: x1-x3.png  used on input line 243.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <y1-y3.png, id=32, 642.4pt x 481.8pt>
 File: y1-y3.png Graphic file (type png)
 <use y1-y3.png>
-Package pdftex.def Info: y1-y3.png  used on input line 225.
+Package pdftex.def Info: y1-y3.png  used on input line 247.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <z1-z3.png, id=33, 642.4pt x 481.8pt>
 File: z1-z3.png Graphic file (type png)
 <use z1-z3.png>
-Package pdftex.def Info: z1-z3.png  used on input line 229.
+Package pdftex.def Info: z1-z3.png  used on input line 251.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <v1-v3.png, id=34, 642.4pt x 481.8pt>
 File: v1-v3.png Graphic file (type png)
 <use v1-v3.png>
-Package pdftex.def Info: v1-v3.png  used on input line 233.
+Package pdftex.def Info: v1-v3.png  used on input line 255.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <x2-x3.png, id=35, 642.4pt x 481.8pt>
 File: x2-x3.png Graphic file (type png)
 <use x2-x3.png>
-Package pdftex.def Info: x2-x3.png  used on input line 243.
+Package pdftex.def Info: x2-x3.png  used on input line 265.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <y2-y3.png, id=36, 642.4pt x 481.8pt>
 File: y2-y3.png Graphic file (type png)
 <use y2-y3.png>
-Package pdftex.def Info: y2-y3.png  used on input line 247.
+Package pdftex.def Info: y2-y3.png  used on input line 269.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <z2-z3.png, id=37, 642.4pt x 481.8pt>
 File: z2-z3.png Graphic file (type png)
 <use z2-z3.png>
-Package pdftex.def Info: z2-z3.png  used on input line 251.
+Package pdftex.def Info: z2-z3.png  used on input line 273.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
 <v2-v3.png, id=38, 642.4pt x 481.8pt>
 File: v2-v3.png Graphic file (type png)
 <use v2-v3.png>
-Package pdftex.def Info: v2-v3.png  used on input line 255.
+Package pdftex.def Info: v2-v3.png  used on input line 277.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: x1-x2.png Graphic file (type png)
-<use x1-x2.png>
-Package pdftex.def Info: x1-x2.png  used on input line 265.
+<X-3D.png, id=39, 642.4pt x 481.8pt>
+File: X-3D.png Graphic file (type png)
+<use X-3D.png>
+Package pdftex.def Info: X-3D.png  used on input line 287.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: y1-y2.png Graphic file (type png)
-<use y1-y2.png>
-Package pdftex.def Info: y1-y2.png  used on input line 269.
+<y-3d.png, id=40, 642.4pt x 481.8pt>
+File: y-3d.png Graphic file (type png)
+<use y-3d.png>
+Package pdftex.def Info: y-3d.png  used on input line 291.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: z1-z2.png Graphic file (type png)
-<use z1-z2.png>
-Package pdftex.def Info: z1-z2.png  used on input line 273.
+<z-3d.png, id=41, 642.4pt x 481.8pt>
+File: z-3d.png Graphic file (type png)
+<use z-3d.png>
+Package pdftex.def Info: z-3d.png  used on input line 295.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: v1-v2.png Graphic file (type png)
-<use v1-v2.png>
-Package pdftex.def Info: v1-v2.png  used on input line 277.
+<v-3d.png, id=42, 642.4pt x 481.8pt>
+File: v-3d.png Graphic file (type png)
+<use v-3d.png>
+Package pdftex.def Info: v-3d.png  used on input line 299.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
- [5 <./x1-x2.png (PNG copy)> <./y1-y2.png (PNG copy)> <./z1-z2.png (PNG copy)> <./v1-v2.png (PNG copy)>] [6 <./x1-x3.png (PNG copy)> <./y1-y3.png (PNG copy)> <./z1-z3.png (PNG copy)> <./v1-v3.png (PNG copy)>] [7 <./x2-x3.png (PNG copy)> <./y2-y3.png (PNG copy)> <./z2-z3.png (PNG copy)> <./v2-v3.png (PNG copy)>] [8] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/Assignments/Assignment 2/assignment2/.texpadtmp/Assignment 2.aux)
+ [5 <./x1-x2.png (PNG copy)> <./y1-y2.png (PNG copy)> <./z1-z2.png (PNG copy)> <./v1-v2.png (PNG copy)>] [6 <./x1-x3.png (PNG copy)> <./y1-y3.png (PNG copy)> <./z1-z3.png (PNG copy)> <./v1-v3.png (PNG copy)>] [7 <./x2-x3.png (PNG copy)> <./y2-y3.png (PNG copy)> <./z2-z3.png (PNG copy)> <./v2-v3.png (PNG copy)>] [8 <./X-3D.png (PNG copy)> <./y-3d.png (PNG copy)> <./z-3d.png (PNG copy)> <./v-3d.png (PNG copy)>] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/Assignments/Assignment 2/assignment2/.texpadtmp/Assignment 2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6340 strings out of 492980
- 90872 string characters out of 6132509
- 317650 words of memory out of 5000000
- 9799 multiletter control sequences out of 15000+600000
+ 6362 strings out of 492980
+ 91134 string characters out of 6132509
+ 331650 words of memory out of 5000000
+ 9817 multiletter control sequences out of 15000+600000
  12773 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,7n,40p,281b,1665s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/Assignments/Assignment 2/assignment2/.texpadtmp/Assignment 2.pdf" (8 pages, 472164 bytes).
+Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/Assignments/Assignment 2/assignment2/.texpadtmp/Assignment 2.pdf" (8 pages, 739735 bytes).
 PDF statistics:
- 95 PDF objects out of 1000 (max. 8388607)
+ 99 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
 
