@@ -328,14 +328,7 @@ for x1 in range(-10, 10, 1):
     roots = np.roots(poly_coefficients)
     roots_1.append(roots[0])
     roots_2.append(roots[1])
-#     print(roots[1])
-#
-# print('disc x1 points:')
-# print(equation_points)
-#
-# print('roots of the coefficients:')
-# print(roots_1)
-# print(roots_2)
+
 
 plt.plot(v1_matrix[0, :], v1_matrix[2, :], 'b.', label="Class 1")
 plt.plot(v2_matrix[0, :], v2_matrix[2, :], 'r.', label="Class 2")
