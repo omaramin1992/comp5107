@@ -200,16 +200,6 @@ def estimate_cov_ml(points, mean, n):
     return cov
 
 
-# def estimate_mean_bl(points, n):
-#     for i in n:
-#         print(i)
-#     return None
-
-
-# def estimate_cov_bl(points, mean, n):
-#     return None
-
-
 def estimate_mean_bl(points, mean0, cov_initial, cov_actual, n):
     points = np.array(points)
     points = points[:, :n]
@@ -229,3 +219,229 @@ def estimate_mean_bl(points, mean0, cov_initial, cov_actual, n):
 def kernel_function(x, xi, cov):
     result = (1 / (math.sqrt(2 * math.pi) * cov)) * math.exp(-math.pow(x - xi, 2) / (2 * math.pow(cov, 2)))
     return result
+
+
+def parzen_expected_mean(x, f_x, delta_x):
+    return x * f_x * delta_x
+
+
+def parzen_expected_covariance(x, f_x, delta_x, mean):
+    return math.pow(x - mean, 2) * f_x * delta_x
+
+
+def calculate_disc_function_with_plot(m1, m2, cov1, cov2, x1_points, x2_points, p1, p2, d1, d2, method):
+    a = ((np.linalg.inv(cov2) - np.linalg.inv(cov1)) / 2)
+    b = np.array(m1.transpose() @ np.linalg.inv(
+        cov1) - m2.transpose() @ np.linalg.inv(cov2))
+    c = np.math.log(p1 / p2) + np.log(np.linalg.det(cov2) / np.linalg.det(cov1))
+
+    equation_points = []
+    roots_1 = []
+    roots_2 = []
+
+    min_w = min(min(min(x1_points[d1 - 1, :]), min(x2_points[d1 - 1, :])),
+                min(min(x1_points[d2 - 1, :]), min(x2_points[d2 - 1, :])))
+    max_w = max(max(max(x1_points[d1 - 1, :]), max(x2_points[d1 - 1, :])),
+                max(max(x1_points[d2 - 1, :]), max(x2_points[d2 - 1, :])))
+
+    for x1 in np.arange(min_w - 1, max_w + 1, 1):
+        equation_points.append(x1)
+        x2_square_coefficient = a[d2 - 1][d2 - 1]
+        x2_coefficient = (a[d1 - 1][d2 - 1] * x1) + (a[d2 - 1][d1 - 1] * x1) + b[d1 - 1][d2 - 1]
+        constant = a[d1 - 1][d1 - 1] * np.math.pow(x1, 2) + b[d1 - 1][d1 - 1] * x1 + c
+
+        poly_coefficients = [x2_square_coefficient, x2_coefficient, constant]
+        roots = np.roots(poly_coefficients)
+        roots_1.append(roots[0])
+        roots_2.append(roots[1])
+
+    plt.plot(x1_points[d1 - 1, :], x1_points[d2 - 1, :], 'b.', label="Class 1")
+    plt.plot(x2_points[d1 - 1, :], x2_points[d2 - 1, :], 'r.', label="Class 2")
+    plt.plot(equation_points, roots_2, 'g--', label="Dis.Fnc.")
+    plt.plot(equation_points, roots_1, 'y--', label="Dis.Fnc.")
+    plt.xlabel('x' + str(d1))
+    plt.ylabel('x' + str(d2))
+
+    plt.axis([min_w - 1, max_w + 1, min_w - 1, max_w + 1])
+    plt.title('Dis. Fun. for ' + method + ' for x' + str(d1) + '-x' + str(d2))
+    plt.legend(loc=2)
+    plt.show()
+
+
+def bl_expected_mean(x1_training_points, x2_training_points, sigma_x1, sigma_x2, m1, m2, number_of_points):
+    w1_plot_points = [[],
+                      [],
+                      []]
+    w1_plot_points_index = []
+    w1_mean_values = [[],
+                      [],
+                      []]
+    w1_ml_mean_values = [[],
+                         [],
+                         []]
+    w1_ml_cov_values = [[],
+                        [],
+                        []]
+
+    w1_mean_difference = []
+    w1_ml_mean_difference = []
+    w1_ml_cov_difference = []
+    sigma0 = np.identity(3)
+    m1_0 = np.array([[0],
+                     [1],
+                     [0]])
+
+    w2_plot_points = [[],
+                      [],
+                      []]
+    w2_plot_points_index = []
+    w2_mean_values = [[],
+                      [],
+                      []]
+    w2_ml_mean_values = [[],
+                         [],
+                         []]
+    w2_ml_cov_values = [[], [], []]
+    w2_mean_difference = []
+    w2_ml_mean_difference = []
+    w2_ml_cov_difference = []
+    m2_0 = np.array([[0],
+                     [1],
+                     [0]])
+
+    for n in range(1, number_of_points, 1):
+        # for class 1
+        w1_plot_points_index = np.append(w1_plot_points_index, n)
+
+        x1_ml_estimated_mean = estimate_mean_ml(x1_training_points, n)
+        x1_ml_estimated_cov = estimate_cov_ml(x1_training_points, x1_ml_estimated_mean, n)
+        w1_ml_mean_difference = np.append(w1_ml_mean_difference, np.absolute(np.linalg.norm(x1_ml_estimated_mean - m1)))
+        w1_ml_cov_difference = np.append(w1_ml_cov_difference,
+                                         np.absolute(np.linalg.norm(x1_ml_estimated_cov - sigma_x1)))
+
+        m1_0 = estimate_mean_bl(x1_training_points, m1_0, sigma0, sigma_x1, n)
+        w1_mean_values = np.append(w1_mean_values, m1_0, axis=1)
+        w1_plot_points = np.append(w1_plot_points, x1_training_points[:, [n]], axis=1)
+        w1_mean_difference = np.append(w1_mean_difference, np.absolute(np.linalg.norm(m1_0 - m1)))
+
+        # for class 2
+        w2_plot_points_index = np.append(w2_plot_points_index, n)
+
+        x2_ml_estimated_mean = estimate_mean_ml(x2_training_points, n)
+        x2_ml_estimated_cov = estimate_cov_ml(x2_training_points, x2_ml_estimated_mean, n)
+        w2_ml_mean_difference = np.append(w2_ml_mean_difference, np.absolute(np.linalg.norm(x2_ml_estimated_mean - m2)))
+        w2_ml_cov_difference = np.append(w2_ml_cov_difference,
+                                         np.absolute(np.linalg.norm(x2_ml_estimated_cov - sigma_x2)))
+
+        m2_0 = estimate_mean_bl(x2_training_points, m2_0, sigma0, sigma_x2, n)
+        w2_mean_values = np.append(w2_mean_values, m2_0, axis=1)
+        w2_plot_points = np.append(w2_plot_points, x2_training_points[:, [n]], axis=1)
+        w2_mean_difference = np.append(w2_mean_difference, np.absolute(np.linalg.norm(m2_0 - m2)))
+    return m1_0, m2_0,
+
+
+def estimated_mean_parzen(x1_training_points, x2_training_points, kernel_covariance, step_size):
+    x1_parzen_estimated_mean = []
+    x1_parzen_estimated_covariance = []
+
+    x2_parzen_estimated_mean = []
+    x2_parzen_estimated_covariance = []
+
+    for i in range(0, 3, 1):
+        # for class 1
+        f_x1_points = []
+        f_x1_values = []
+        for j in np.arange(min(x1_training_points[i, :]) - 1, max(x1_training_points[i, :]), step_size):
+            f_x1_points = np.append(f_x1_points, j)
+
+        f_x1_points = np.sort(f_x1_points)
+
+        for x in f_x1_points:
+            f_x = 0.0
+            for xi in x1_training_points[i, :]:
+                f_x = f_x + kernel_function(x, xi, kernel_covariance)
+            f_x = f_x / x1_training_points[i, :].size
+            f_x1_values = np.append(f_x1_values, f_x)
+
+        estimated_mean = 0.0
+        for x in range(0, f_x1_points.size):
+            estimated_mean = estimated_mean + parzen_expected_mean(f_x1_points[x], f_x1_values[x], step_size)
+        x1_parzen_estimated_mean = np.append(x1_parzen_estimated_mean, estimated_mean)
+
+        estimated_covariance = 0.0
+        for x in range(0, f_x1_points.size):
+            estimated_covariance = estimated_covariance + parzen_expected_covariance(f_x1_points[x], f_x1_values[x],
+                                                                                     step_size, estimated_mean)
+        x1_parzen_estimated_covariance = np.append(x1_parzen_estimated_covariance, estimated_covariance)
+
+        # for class 2
+        f_x2_points = []
+        f_x2_values = []
+        for j in np.arange(min(x2_training_points[i, :]) - 1, max(x2_training_points[i, :]), step_size):
+            f_x2_points = np.append(f_x2_points, j)
+        f_x2_points = np.sort(f_x2_points)
+
+        for x in f_x2_points:
+            f_x = 0.0
+            for xi in x2_training_points[i, :]:
+                f_x = f_x + kernel_function(x, xi, kernel_covariance)
+            f_x = f_x / x2_training_points[i, :].size
+            f_x2_values = np.append(f_x2_values, f_x)
+
+        estimated_mean = 0.0
+        for x in range(0, f_x2_points.size):
+            estimated_mean = estimated_mean + parzen_expected_mean(f_x2_points[x], f_x2_values[x], step_size)
+        x2_parzen_estimated_mean = np.append(x2_parzen_estimated_mean, estimated_mean)
+
+        estimated_covariance = 0.0
+        for x in range(0, f_x2_points.size):
+            estimated_covariance = estimated_covariance + parzen_expected_covariance(f_x2_points[x], f_x2_values[x],
+                                                                                     step_size, estimated_mean)
+        x2_parzen_estimated_covariance = np.append(x2_parzen_estimated_covariance, estimated_covariance)
+
+    x1_parzen_estimated_mean = np.array(x1_parzen_estimated_mean)[np.newaxis]
+    x1_parzen_estimated_mean = x1_parzen_estimated_mean.transpose()
+
+    x2_parzen_estimated_mean = np.array(x2_parzen_estimated_mean)[np.newaxis]
+    x2_parzen_estimated_mean = x2_parzen_estimated_mean.transpose()
+
+    x1_parzen_estimated_covariance = np.diag(x1_parzen_estimated_covariance)
+    x2_parzen_estimated_covariance = np.diag(x2_parzen_estimated_covariance)
+
+    return x1_parzen_estimated_mean, x1_parzen_estimated_covariance, x2_parzen_estimated_mean, x2_parzen_estimated_covariance
+
+
+def test_classifier(class1_test_points, class2_test_points, x1_ml_estimated_cov, x2_ml_estimated_cov,
+                    x1_ml_estimated_mean, x2_ml_estimated_mean, number_of_testing_points):
+    # classification results
+    class1_true = 0.0
+    class1_false = 0.0
+
+    class2_true = 0.0
+    class2_false = 0.0
+    # print(class1_test_points[:, 1])
+    # classify each point
+    for j in range(number_of_testing_points-1):
+        discriminant_value = calculate_discriminant(class1_test_points[:, j], x1_ml_estimated_cov,
+                                                    x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean,
+                                                    0.5,
+                                                    0.5)
+        if discriminant_value > 0:
+            class1_true += 1
+        else:
+            class1_false += 1
+
+    for j in range(number_of_testing_points-1):
+        discriminant_value = calculate_discriminant(class2_test_points[:, j], x1_ml_estimated_cov,
+                                                    x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean,
+                                                    0.5,
+                                                    0.5)
+        if discriminant_value < 0:
+            class2_true += 1
+        else:
+            class2_false += 1
+
+    class1_accuracy = (class1_true / number_of_testing_points) * 100
+    class2_accuracy = (class2_true / number_of_testing_points) * 100
+
+    return class1_accuracy, class2_accuracy

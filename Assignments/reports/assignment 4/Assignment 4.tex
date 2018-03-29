@@ -59,194 +59,445 @@ COMP 5107}
 %\begin{enumerate}[label=\alph*)]
 %	\item First item
 %\end{enumerate}
-In this assignment we have two classes $X_1$ and $X_2$ with means same as the previous assignment $M_1$ and $M_2$ where: $$M_1 = \begin{bmatrix}
+In this assignment we have two classes $X_1$ and $X_2$ with means same as the previous assignments $M_1$ and $M_2$ where: $$M_1 = \begin{bmatrix}
 3 & 1 & 4 
 \end{bmatrix},\quad M_2 = \begin{bmatrix}
 -3 & 1 & -4 
 \end{bmatrix}$$
   and covariance matrices as follows: 
-  $$\sum_{X_1} = \begin{bmatrix}
+  $$\Sigma_{X_1} = \begin{bmatrix}
 a^2 & \beta ab & \alpha ac \\
 \beta ab & b^2 & \beta bc \\
 \alpha ac & \beta bc & c^2 
-\end{bmatrix},\quad \sum_{X_2} = \begin{bmatrix}
+\end{bmatrix},\quad \Sigma_{X_2} = \begin{bmatrix}
 c^2 & \alpha bc & \beta ac \\
 \alpha bc & b^2 & \alpha ab \\
 \beta ac & \alpha ab & a^2 
 \end{bmatrix}$$
 
 The parameters used in this assignment is as follows:
-$$ a=2,\quad b=3,\quad c=4,\quad \alpha=0.1,\quad \beta=0.2,\quad \#points = 2000 $$
+$$ a=2,\quad b=3,\quad c=4,\quad \alpha=0.1,\quad \beta=0.2,\quad \#points = 200 $$
 This resulted the covariance matrices to have the following values:
-$$\sum_{X_1} = \begin{bmatrix}
+$$\Sigma_{X_1} = \begin{bmatrix}
 4 & 1.2 & 0.8 \\
 1.2 & 9 & 2.4 \\
 0.8 & 2.4 & 16 
-\end{bmatrix}, \quad \sum_{X_2} = \begin{bmatrix}
+\end{bmatrix}, \quad \Sigma_{X_2} = \begin{bmatrix}
 16 & 1.2 & 1.6 \\
 1.2 & 9 & 0.6 \\
 1.6 & 0.6 & 4 
 \end{bmatrix}$$
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Create points for each distribution:}
 
 Here we used the same exact methods for creating the points from the previous assignment.
 And the plots of the points are available below.
 
-\begin{lstlisting}[label={list:first},caption=Gaussian vector generation]
+\begin{lstlisting}[label={list:first},caption=points generation]
 # create point matrices for the two classes X1 and X2
-z1_matrix, x1_matrix = h.generate_point_matrix(v_x1, lambda_x1, m1, number_of_points)
-z2_matrix, x2_matrix = h.generate_point_matrix(v_x2, lambda_x2, m2, number_of_points)
-
-# PLOTTING #
-# plot the first class as blue for (d1 - d2) domain and second class as red
-h.plot_2d_graph(x1_matrix, x2_matrix, 1, 2, 'x1', 'x2', 'x1-x2')
-
-# plot the first class as blue for (d1 - d3) domain and second class as red
-h.plot_2d_graph(x1_matrix, x2_matrix, 1, 3, 'x1', 'x3', 'x1-x3')
+z1_training_points, x1_training_points = h.generate_point_matrix(v_x1, lambda_x1, m1, number_of_points)
+z2_training_points, x2_training_points = h.generate_point_matrix(v_x2, lambda_x2, m2, number_of_points)
 \end{lstlisting}
 
+\begin{figure}
+\begin{center}
+	\subfigure[x1-x2]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-points-before.png}
+	\label{absorbing}
+	}
+	\subfigure[x1-x3]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-points-before.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Training points}
+\end{figure}
 
-\subsection{Compute the optimal Bayes discriminant function:}
 
-For calculating the Bayes discriminant function we use the quadratic function form of the matrices using the following equation:
-$$ X^TAX+B^TX+C \lessgtr 0 $$
-Then setting one variable to 0 and solving for the other two which will result in a quadratic equation.
-For $(x_1-x_2)$:
-$$(a_{22})x_2^2+(a_{12}x_{1}+a_{21}x_{1}+b_{12})x_2+(a_{11}x_1^2+b_{11}x_1+c)=0$$
-For $(x_1-x_3)$:
-$$(a_{33})x_3^2+(a_{13}x_{1}+a_{31}x_{1}+b_{13})x_3+(a_{11}x_1^2+b_{11}x_1+c)=0$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Estimate the ML and BL:}
+
+To estimate the parameters for both data sets using ML:
+$$ \hat{M}=\frac{1}{N} \sum_{i=1}^{N} x_i, \quad\quad \hat{\Sigma}=	 frac{1}{N} \sum_{i=1}^{N}[X_i-\hat{M}][X_i-\hat{M}]^T$$
 
 
-\begin{lstlisting} [label={list:first},caption=Simultaneous Diagonalization]
-a = ((np.linalg.inv(sigma_x2) - np.linalg.inv(sigma_x1)) / 2)
-b = np.array(m1.transpose() @ np.linalg.inv(sigma_x1) - m2.transpose() @ np.linalg.inv(sigma_x2))
-c = np.math.log(p1 / p2) + np.log(np.linalg.det(sigma_x2) / np.linalg.det(sigma_x1))
+\begin{lstlisting} [label={list:first},caption=ML and BL mean and covariance]
+def estimate_mean_ml(points, n):
+    points = np.array(points)
+    points = points[:, :n]
+    mean = np.sum(points, axis=1)
+    mean = mean / n
+    mean = np.array(mean)[np.newaxis]
+    return mean.transpose()
 
-equation_points = []
-roots_1 = []
-roots_2 = []
+def estimate_cov_ml(points, mean, n):
+    points = np.array(points)
+    mean = np.array(mean)
+    cov = (points - mean) @ (points - mean).transpose()
+    cov = cov / n
+    return cov
 
-min_w = min(min(min(x1_matrix[0, :]), min(x2_matrix[0, :])),
-            min(min(x1_matrix[1, :]), min(x2_matrix[1, :])))
-max_w = max(max(max(x1_matrix[0, :]), max(x2_matrix[0, :])),
-            max(max(x1_matrix[1, :]), max(x2_matrix[1, :])))
+def estimate_mean_bl(points, mean0, cov_initial, cov_actual, n):
+    points = np.array(points)
+    points = points[:, :n]
+    mean0 = np.array(mean0)
+    cov_initial = np.array(cov_initial)
+    cov_actual = np.array(cov_actual)
+    points_sum = np.sum(points, axis=1) / n
+    points_sum = np.array(points_sum)[np.newaxis]
+    points_sum = points_sum.transpose()
 
-# get the roots for the discriminant function for (x1-x2)
-for x1 in range(-15, 10, 1):
-    equation_points.append(x1)
-    x2_square_coefficient = a[1 	][1]
-    x2_coefficient = (a[0][1] * x1) + (a[1][0] * x1) + b[0][1]
-    constant = a[0][0] * np.math.pow(x1, 2) + b[0][0] * x1 + c
+    m = cov_actual / n @ np.linalg.inv(
+        cov_actual / n + cov_initial) @ mean0 + cov_initial @ np.linalg.inv(
+        cov_actual / n + cov_initial) @ points_sum
+    return m
+\end{lstlisting}
 
-    poly_coefficients = [x2_square_coefficient, x2_coefficient, constant]
-    roots = np.roots(poly_coefficients)
-    roots_1.append(roots[0])
-    roots_2.append(roots[1])
+And these were the results of ML:$$\hat{M_1} = \begin{bmatrix}
+3.22 \\ 1.23 \\ 4.16 
+\end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
+-2.85 \\ 1.23 \\ -4.09 
+\end{bmatrix}$$
+$$\hat{\sum_{X_1}} = \begin{bmatrix}
+4.30 & 1.22 & 1.29 \\
+1.22 & 9.81 & 2.35 \\
+1.29 & 2.35 & 14.49 
+\end{bmatrix}, \quad \hat{\sum_{X_2}} = \begin{bmatrix}
+17.75 & 0.97 & 2.57 \\
+0.97 & 8.48 & 1.21 \\
+2.57 & 1.21 & 4.13 
+\end{bmatrix}$$\\
 
-# get the roots for the discriminant function for (x1-x3) 
-for x1 in range(-15, 15, 1):
-    equation_points.append(x1)
-    x2_square_coefficient = a[2][2]
-    x2_coefficient = (a[0][2] * x1) + (a[2][0] * x1) + b[0][2]
-    constant = a[0][0] * np.math.pow(x1, 2) + b[0][0] * x1 + c
 
-    poly_coefficients = [x2_square_coefficient, x2_coefficient, constant]
-    roots = np.roots(poly_coefficients)
-    roots_1.append(roots[0])
-    roots_2.append(roots[1])
+Then we used BL to estimate the mean is using the following equation:
+$$\left(m\right)_n=\frac{1}{n}\Sigma\left[\frac{1}{n}\Sigma+\Sigma_0\right]^{-1}m_0+\Sigma_0\left[\frac{1}{n}\Sigma+\Sigma_0\right]^{-1}\left(\frac{1}{n}\sum_{j=1}^{n}x_j\right)$$
+
+The resulting means are as below:
+$$\hat{M_1} = \begin{bmatrix}
+3.22 \\ 1.24 \\ 4.13 
+\end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
+-2.85 \\ 1.23 \\ -4.10 
+\end{bmatrix}$$
+
+\begin{figure}
+\begin{center}
+	\subfigure[ML Mean]{
+	\includegraphics[width=0.45\textwidth]{ML-mean-convergance-before.png}
+	\label{absorbing}
+	}
+	\subfigure[ML Covariance]{
+	\includegraphics[width=0.45\textwidth]{ML-cov-convergance-before.png}
+	\label{absorbing}
+	}\\
+	\subfigure[BL Mean]{
+	\includegraphics[width=0.45\textwidth]{BL-mean-convergance-before.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Mean and covariance Convergances}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Use Parzen window approach:}
+In this part we are going to use Parzen window, gaussian kernels, to estimate the means and density functions of each dimension. The kernel function used is:
+$$\hat{f_i}(x)=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-x_i)^2}{2\sigma^2}} $$
+
+The estimated mean:
+$$\hat{m}=\sum_{x}x\hat{f}(x)\Delta x $$
+
+The estimated covariance:
+$$\hat{\sigma}^2=\sum_{x}(x-\hat{m})^2\hat{f}(x)\Delta x$$
+
+\begin{lstlisting} [label={list:first},caption=Parzen window Code]
+def kernel_function(x, xi, cov):
+    result = (1 / (math.sqrt(2 * math.pi) * cov)) * math.exp(-math.pow(x - xi, 2) / (2 * math.pow(cov, 2)))
+    return result
+
+def parzen_expected_mean(x, f_x, delta_x):
+    return x * f_x * delta_x
+
+def parzen_expected_covariance(x, f_x, delta_x, mean):
+    return math.pow(x - mean, 2) * f_x * delta_x
+\end{lstlisting}
+
+And these were the results of Parzen:$$\hat{M_1} = \begin{bmatrix}
+3.19 \\ 1.21 \\ 4.12 
+\end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
+-2.87 \\ 1.20 \\ -4.09 
+\end{bmatrix}$$
+$$\hat{\sum_{X_1}} = \begin{bmatrix}
+4.28 & 0 & 0 \\
+0 & 9.69 & 0 \\
+0 & 0 & 14.32 
+\end{bmatrix}, \quad \hat{\sum_{X_2}} = \begin{bmatrix}
+17.51 & 0 & 0 \\
+0 & 8.33 & 0 \\
+0 & 0 & 4.09 
+\end{bmatrix}$$\\
+
+
+\begin{figure}
+\begin{center}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-density-estimation-parzen-before.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x2-density-estimation-parzen-before.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x3-density-estimation-parzen-before.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Density Functions Estimation using Parzen Window}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Compute Bayes discriminant function for ML, BL and Parzen:}
+Here I used the same code from the previous assignment to calculate the discriminant function for the three methods. And the results are in the figure below.
+
+\begin{figure}
+\begin{center}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-ML-before.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-ML-before.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-BL-before.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-BL-before.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-parzen-before.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-parzen-before.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Density Functions Estimation using Parzen Window}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Use 10-Cross validation to test the classifiers:}
+We created 200 more points for each class so we have 400 points total for each class.\\
+
+\begin{lstlisting} [label={list:first},caption=K-cross validation]
+test_results_ml_class1 = []
+test_results_ml_class2 = []
+
+test_results_bl_class1 = []
+test_results_bl_class2 = []
+
+test_results_parzen_class1 = []
+test_results_parzen_class2 = []
+
+k = 10
+
+class1_total_points = v1_training_points
+class1_total_points = np.append(class1_total_points, v1_test_points, axis=1)
+
+class2_total_points = v2_training_points
+class2_total_points = np.append(class2_total_points, v2_test_points, axis=1)
+
+print(class1_total_points[:, 399])
+n = number_of_points + test_points_count
+for i in range(0, k, 1):
+    print('Cross:' + str(i+1))
+    number_of_testing_points = int(n / k)
+    number_of_training_points = int(n - n / k)
+    start = int(n * i / k)
+    end = int((i + 1) * n / k - 1)
+
+    class1_test_points = class1_total_points[:, start: end]
+    class1_train_points = class1_total_points[:, 0:start]
+    class1_train_points = np.append(class1_train_points, class1_total_points[:, end:], axis=1)
+
+    class2_test_points = class2_total_points[:, start: end]
+    class2_train_points = class2_total_points[:, 0:start]
+    class2_train_points = np.append(class2_train_points, class2_total_points[:, end:], axis=1)
+
+    # estimated mean using ML
+    x1_ml_estimated_mean = h.estimate_mean_ml(class1_train_points, number_of_training_points)
+    x1_ml_estimated_cov = h.estimate_cov_ml(class1_train_points, x1_ml_estimated_mean, number_of_training_points)
+
+    x2_ml_estimated_mean = h.estimate_mean_ml(class2_train_points, number_of_points)
+    x2_ml_estimated_cov = h.estimate_cov_ml(class2_train_points, x2_ml_estimated_mean, number_of_training_points)
+
+    # Estimating the means using BL
+    x1_bl_estimated_mean, x2_bl_estimated_mean = h.bl_expected_mean(class1_train_points, class2_train_points, sigma_v1, sigma_v2, v1_mean, v2_mean, number_of_training_points)
+
+    # estimated mean and cov using parzen window
+    x1_parzen_estimated_mean, x1_parzen_estimated_covariance, x2_parzen_estimated_mean, x2_parzen_estimated_covariance = h.estimated_mean_parzen(class1_train_points, class2_train_points, kernel_covariance, step_size)
+
+    ml_class1_accuracy, ml_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, x1_ml_estimated_cov, x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean, number_of_testing_points)
+    test_results_ml_class1 = np.append(test_results_ml_class1, ml_class1_accuracy)
+    test_results_ml_class2 = np.append(test_results_ml_class2, ml_class2_accuracy)
+
+    bl_class1_accuracy, bl_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, sigma_v1, sigma_v2, x1_bl_estimated_mean, x2_bl_estimated_mean, number_of_testing_points)
+    test_results_bl_class1 = np.append(test_results_bl_class1, bl_class1_accuracy)
+    test_results_bl_class2 = np.append(test_results_bl_class2, bl_class2_accuracy)
+
+    parzen_class1_accuracy, parzen_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, x1_parzen_estimated_covariance, x2_parzen_estimated_covariance, x1_parzen_estimated_mean, x2_parzen_estimated_mean, number_of_testing_points)
+    test_results_parzen_class1 = np.append(test_results_parzen_class1, parzen_class1_accuracy)
+    test_results_parzen_class2 = np.append(test_results_parzen_class2, parzen_class2_accuracy)
+\end{lstlisting}
+
+And the resulting testing accuracy is as follows:
+\begin{lstlisting} [label={list:first},caption=Accuracy before Diagonalization]
+ML Accuracy before Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |  88.75   |
+| class 2 |  93.75   |
++---------+----------+
+
+BL Accuracy before Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |   89.5   |
+| class 2 |  94.25   |
++---------+----------+
+
+Parzen Accuracy before Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |  91.75   |
+| class 2 |   90.5   |
++---------+----------+
 
 \end{lstlisting}
 
-\subsection{Generating 200 testing points and report the accuracy:}
-Here we create 200 points in the $X$-world and try to classify them using the discriminant function that we calculated before.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\break
+\subsection{Diagonalize the points and redo everything:}
+After diagonalizing the data, I will only include the results obtained using the same methods.
 
-If the $discriminant value > 0$, then class 1
-and if $discriminant value < 0$, then class 2
+\begin{figure}
+\begin{center}
+	\subfigure[v1-v2]{
+	\includegraphics[width=0.45\textwidth]{v1-v2-points.png}
+	\label{absorbing}
+	}
+	\subfigure[v1-v3]{
+	\includegraphics[width=0.45\textwidth]{v1-v3-points.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Training points after diagonalization}
+\end{figure}
 
-\begin{lstlisting} [label={list:first},caption=Generating 5000 points]
-+---------+---------+---------+----------+
-|  Prd\Tr | class 1 | class 2 | Accuracy |
-+---------+---------+---------+----------+
-| class 1 |  180.0  |   20.0  |   90.0   |
-| class 2 |   3.0   |  197.0  |   98.5   |
-+---------+---------+---------+----------+
+\begin{figure}
+\begin{center}
+	\subfigure[ML Mean]{
+	\includegraphics[width=0.45\textwidth]{ML-mean-convergance-after.png}
+	\label{absorbing}
+	}
+	\subfigure[ML Covariance]{
+	\includegraphics[width=0.45\textwidth]{ML-cov-convergance-after.png}
+	\label{absorbing}
+	}\\
+	\subfigure[BL Mean]{
+	\includegraphics[width=0.45\textwidth]{BL-mean-convergance-after.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Mean and covariance Convergances after diagonalization}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-density-estimation-parzen-after.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x2-density-estimation-parzen-after.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x3-density-estimation-parzen-after.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Density Functions Estimation using Parzen Window after diagonalization}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-ML-after.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-ML-after.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-BL-after.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-BL-after.png}
+	\label{absorbing}
+	}\\
+	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-parzen-after.png}
+	\label{absorbing}
+	}
+	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
+	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-parzen-after.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{Discriminant Functions after diagonalization}
+\end{figure}
+\break
+And the resulting testing accuracy is as follows:
+\begin{lstlisting} [label={list:first},caption=Accuracy after Diagonalization]
+ML Accuracy After Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |  88.75   |
+| class 2 |  93.75   |
++---------+----------+
+
+BL Accuracy after Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |   89.5   |
+| class 2 |   94.5   |
++---------+----------+
+
+Parzen Accuracy after Diagonalization:
++---------+----------+
+|         | Accuracy |
++---------+----------+
+| class 1 |   91.5   |
+| class 2 |  92.25   |
++---------+----------+
+
 \end{lstlisting}
-
-\subsection{Diagonalize the points:}
-\begin{lstlisting} [label={list:first},caption=Generating 5000 points]
-# diagonalizing the original points and the testing points
-v1_matrix, v2_matrix, sigma_v1, sigma_v2, v1_mean, v2_mean = h.diagonalize_simultaneously(x1_matrix, x2_matrix, sigma_x1, sigma_x2, m1, m2)
-v1_test_points, v2_test_points, _, _, _, _ = h.diagonalize_simultaneously(x1_test_points, x2_test_points, sigma_x1, sigma_x2, m1, m2)
-\end{lstlisting}
-
-\subsection{Computing the discriminant function for $V$-world:}
-For this part i used the same method as part \textit{b}, but instead I used the covariance and means of the diagonalized points.
-
-\subsection{Classify the same testing points in the $V$-world:}
-We used the same exact 200 points here to test the new discriminant function that we created for the $V$-world. The values returned by the function were almost identical, they just differed in floating points which did not affect the classification accuracy. hence we got the results as follows:
-\begin{lstlisting} [label={list:first},caption=Generating 5000 points]
-After diagonalizing:
-+---------+---------+---------+----------+
-|  Prd\Tr | class 1 | class 2 | Accuracy |
-+---------+---------+---------+----------+
-| class 1 |  180.0  |   20.0  |   90.0   |
-| class 2 |   3.0   |  197.0  |   98.5   |
-+---------+---------+---------+----------+
-
-\end{lstlisting}
-
-
-\subsection{The graphs for the points and the discriminant function:}
-The following graphs show the points generated in the $X$ world before diagonalization and also the calculated \textit{discriminant function}.
-\newpage
-%\begin{figure}
-%\begin{center}
-%	\subfigure[x1-x2]{
-%	\includegraphics[width=0.45\textwidth]{x1-x2}
-%	\label{absorbing}
-%	}
-%	\subfigure[x1-x2]{
-%	\includegraphics[width=0.45\textwidth]{x1-x2-disc-func}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[x1-x3]{
-%	\includegraphics[width=0.45\textwidth]{x1-x3}
-%	\label{absorbing}
-%	}
-%	\subfigure[x1-x3]{
-%	\includegraphics[width=0.45\textwidth]{x1-x3-disc-func}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{The generated points in $X$-world and the \textit{discriminant function}}
-%\end{figure}
-%
-%\begin{figure}
-%\begin{center}
-%	\subfigure[v1-v2]{
-%	\includegraphics[width=0.45\textwidth]{v1-v2}
-%	\label{absorbing}
-%	}
-%	\subfigure[v1-v2]{
-%	\includegraphics[width=0.45\textwidth]{v1-v2-disc-func}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[v1-v3]{
-%	\includegraphics[width=0.45\textwidth]{v1-v3}
-%	\label{absorbing}
-%	}
-%	\subfigure[v1-v3]{
-%	\includegraphics[width=0.45\textwidth]{v1-v3-disc-func}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{The generated points in $V$-world and the \textit{discriminant function}}
-%\end{figure}
-
-
-
 
 \end{document}  
 
