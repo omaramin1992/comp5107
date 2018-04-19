@@ -18,27 +18,27 @@ def estimate_mean_bl(points, mean0, cov_initial, cov_actual, n):
     return m
 
 
-def bl_expected_mean(x1_training_points, x2_training_points, sigma_x1, sigma_x2, m1, m2, number_of_points):
-    w1_plot_points = [[], [], [], [], [], [], []]
+def bl_expected_mean(x1_training_points, x2_training_points, sigma_x1, sigma_x2, m1, m2):
+    w1_plot_points = [[], [], []]
     w1_plot_points_index = []
-    w1_mean_values = [[], [], [], [], [], [], []]
+    w1_mean_values = [[], [], []]
 
     w1_mean_difference = []
     w1_ml_mean_difference = []
     w1_ml_cov_difference = []
-    sigma0 = np.identity(7)
-    m1_0 = np.array([[1], [1], [1], [1], [1], [1], [1]])
+    sigma0 = np.identity(len(x1_training_points[0]))
+    m1_0 = np.array([[1], [1], [1]])
 
-    w2_plot_points = [[], [], [], [], [], [], []]
+    w2_plot_points = [[], [], []]
     w2_plot_points_index = []
-    w2_mean_values = [[], [], [], [], [], [], []]
+    w2_mean_values = [[], [], []]
 
     w2_mean_difference = []
     w2_ml_mean_difference = []
     w2_ml_cov_difference = []
-    m2_0 = np.array([[1], [1], [1], [1], [1], [1], [1]])
+    m2_0 = np.array([[1], [1], [1]])
 
-    for n in range(1, number_of_points, 1):
+    for n in range(1, len(x1_training_points[0]), 1):
         # for class 1
         w1_plot_points_index = np.append(w1_plot_points_index, n)
 
@@ -53,6 +53,7 @@ def bl_expected_mean(x1_training_points, x2_training_points, sigma_x1, sigma_x2,
         w1_plot_points = np.append(w1_plot_points, x1_training_points[:, [n]], axis=1)
         w1_mean_difference = np.append(w1_mean_difference, np.absolute(np.linalg.norm(m1_0 - m1)))
 
+    for n in range(1, len(x2_training_points[0]), 1):
         # for class 2
         w2_plot_points_index = np.append(w2_plot_points_index, n)
 
