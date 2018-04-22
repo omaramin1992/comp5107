@@ -21,7 +21,7 @@ def plot_disc_func(m1, m2, cov1, cov2, x1_points, x2_points, p1, p2, d1, d2, met
     max_w = max(max(max(x1_points[d1 - 1, :]), max(x2_points[d1 - 1, :])),
                 max(max(x1_points[d2 - 1, :]), max(x2_points[d2 - 1, :])))
 
-    for x1 in np.arange(min_w - 1, max_w + 1, 0.01):
+    for x1 in np.arange(min_w - 1, max_w + 1):
         equation_points.append(x1)
         x2_square_coefficient = a[d2 - 1][d2 - 1]
         x2_coefficient = (a[d1 - 1][d2 - 1] * x1) + (a[d2 - 1][d1 - 1] * x1) + b[d1 - 1][d2 - 1]
@@ -44,8 +44,9 @@ def plot_disc_func(m1, m2, cov1, cov2, x1_points, x2_points, p1, p2, d1, d2, met
     #           max(max(x1_points[d1 - 1, :]), max(x2_points[d1 - 1, :]))+1,
     #           min(min(x1_points[d2 - 1, :]), min(x2_points[d2 - 1, :]))-1,
     #           max(max(x1_points[d2 - 1, :]), max(x2_points[d2 - 1, :]))+1])
-
-    plt.title('Dis. Fun. for ' + method + ' for x' + str(d1) + '-x' + str(d2))
+    title = 'Dis. Fun. for ' + method + ' for x' + str(d1) + '-x' + str(d2)
+    plt.title(title)
     plt.legend(loc=2)
     plt.grid(linestyle='dotted')
     plt.show()
+    plt.close()

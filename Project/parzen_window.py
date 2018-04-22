@@ -1,6 +1,6 @@
 import numpy as np
 import math
-
+import matplotlib.pyplot as plt
 
 def kernel_function(x, xi, cov):
     result = (1 / (math.sqrt(2 * math.pi) * cov)) * math.exp(-math.pow(x - xi, 2) / (2 * math.pow(cov, 2)))
@@ -32,7 +32,7 @@ def estimated_mean_parzen(x1_training_points, x2_training_points, dimensions, ke
         # for class 1
         f_x1_points = []
         f_x1_values = []
-        for j in np.arange(min(x1_training_points[i, :]) - 1, max(x1_training_points[i, :]), step_size):
+        for j in np.arange(min(x1_training_points[i, :]) - 1, max(x1_training_points[i, :])+1, step_size):
             f_x1_points = np.append(f_x1_points, j)
 
         f_x1_points = np.sort(f_x1_points)
@@ -57,7 +57,7 @@ def estimated_mean_parzen(x1_training_points, x2_training_points, dimensions, ke
         # for class 2
         f_x2_points = []
         f_x2_values = []
-        for j in np.arange(min(x2_training_points[i, :]) - 1, max(x2_training_points[i, :]), step_size):
+        for j in np.arange(min(x2_training_points[i, :]) - 1, max(x2_training_points[i, :])+1, step_size):
             f_x2_points = np.append(f_x2_points, j)
         f_x2_points = np.sort(f_x2_points)
 
@@ -77,6 +77,22 @@ def estimated_mean_parzen(x1_training_points, x2_training_points, dimensions, ke
         for x in range(0, f_x2_points.size):
             est_cov = est_cov + parzen_expected_covariance(f_x2_points[x], f_x2_values[x], step_size, est_mean)
         x2_parzen_est_cov = np.append(x2_parzen_est_cov, est_cov)
+
+        min_x_axis = min(min(x1_training_points[i, :])-1, min(x2_training_points[i, :])-1)
+        max_x_axis = max(max(x1_training_points[i, :])+1, max(x2_training_points[i, :])+1)
+
+        # parzen window plots
+        plt.plot(f_x1_points, f_x1_values, 'r--', label="class 1")
+        plt.plot(f_x2_points, f_x2_values, 'b--', label="class 2")
+
+        title = 'Parzen window'
+        plt.xlabel('x values')
+        plt.ylabel('f(x)')
+        plt.xlim(min_x_axis, max_x_axis)
+        plt.title(title)
+        plt.legend(loc=2)
+        plt.show()
+        plt.close()
 
     x1_parzen_est_mean = np.array(x1_parzen_est_mean)[np.newaxis]
     x1_parzen_est_mean = x1_parzen_est_mean.transpose()
