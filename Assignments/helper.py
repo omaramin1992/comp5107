@@ -421,7 +421,7 @@ def test_classifier(class1_test_points, class2_test_points, x1_ml_estimated_cov,
     class2_false = 0.0
     # print(class1_test_points[:, 1])
     # classify each point
-    for j in range(number_of_testing_points-1):
+    for j in range(number_of_testing_points - 1):
         discriminant_value = calculate_discriminant(class1_test_points[:, j], x1_ml_estimated_cov,
                                                     x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean,
                                                     0.5,
@@ -431,7 +431,7 @@ def test_classifier(class1_test_points, class2_test_points, x1_ml_estimated_cov,
         else:
             class1_false += 1
 
-    for j in range(number_of_testing_points-1):
+    for j in range(number_of_testing_points - 1):
         discriminant_value = calculate_discriminant(class2_test_points[:, j], x1_ml_estimated_cov,
                                                     x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean,
                                                     0.5,

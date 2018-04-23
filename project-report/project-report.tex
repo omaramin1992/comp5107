@@ -67,12 +67,14 @@ The idea of the project is to create a pattern classifier based on different met
 	\item Fisher's Discriminant 
 	\item Ho-Kashyap
 \end{itemize}
-Each classifier was tested using five-cross validation.
+For testing the classifiers, five-cross validation was used.
+The code is available on the following link:
+https://github.com/omaramin1992/comp5107 
 
 \section*{Dataset}
-The dataset selected is used to classify different types of glass. The reason for this is that identifying the type of glass helps in criminology. The data had no empty values thus it did not need to be cleaned. The data set contained 9 features(6 were selected) and two main classes and 9 subclasses. For our project we worked with the whole dataset as two main classes only which are (window or non-window). In the project, the data were projected on the first and second dimensions only (x1-x2).
+The dataset selected is used to classify different types of glass. The reason for this is that identifying the type of glass helps in criminology. The data had no empty values thus it did not need to be cleaned. The data set contained 9 features(6 were selected which are Refractive index, Magnesium, Aluminum, Potassium, Barium and Iron) and two main classes and 9 subclasses. For our project we worked with the whole dataset as two main classes only which are (window or non-window) or class1 and class2 respectively. In the project, the data were projected on the first and second dimensions only (x1-x2).
 
-The data was the normalized since the scales were far off from each other and affected the classification behaviour, hence, it was needed to make the scales similar by normalizing the data between 0 and 1. In Figure~\ref{fig:data-points}, we can see the effect of normalizing the data
+The data was the normalized since the scales were far off from each other and affected the classification behaviour, hence, it was needed to make the scales similar by normalizing the data between 0 and 1. In Figure~\ref{fig:data-points}, we can see the effect of normalizing the data.
 
 \begin{figure}
 \begin{center}
@@ -81,7 +83,7 @@ The data was the normalized since the scales were far off from each other and af
 	\label{absorbing}
 	}
 	\subfigure[After Normalizing]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
+	\includegraphics[width=0.45\textwidth]{plots/data-after-norm.png}
 	\label{absorbing}
 	}
 \end{center}
@@ -92,443 +94,191 @@ The data was the normalized since the scales were far off from each other and af
 One problem with the data, and we will see the effect of that, is how close both classes are to each other as they both have very close means. Another problem is that the first class (window) consists of 3 times the instances of the other class(non-window).
 
 \section*{Classifiers}
+
 Below, we are going to go through our different classifiers that we created for this dataset.
 
-\subsection{Quadratic Classifier}
+\subsection{Quadratic Classifiers}
+
 First, we are going to talk about the quadratic classifiers (ML, BL, Parzen).
+
 \subsubsection*{Maximum Likelihood (ML)}
-\subsubsection*{Bayesian Learning (ML)}
-\subsubsection*{Parzen Window}
-\subsection{K-Nearest Neighbours Classifier}
-\subsection{Fisher's Discriminant Classifier}
-\subsection{Ho-Kashyap Classifier}
-%In this assignment we have two classes $X_1$ and $X_2$ with means same as the previous assignments $M_1$ and $M_2$ where: $$M_1 = \begin{bmatrix}
-%3 & 1 & 4 
-%\end{bmatrix},\quad M_2 = \begin{bmatrix}
-%-3 & 1 & -4 
-%\end{bmatrix}$$
-%  and covariance matrices as follows: 
-%  $$\Sigma_{X_1} = \begin{bmatrix}
-%a^2 & \beta ab & \alpha ac \\
-%\beta ab & b^2 & \beta bc \\
-%\alpha ac & \beta bc & c^2 
-%\end{bmatrix},\quad \Sigma_{X_2} = \begin{bmatrix}
-%c^2 & \alpha bc & \beta ac \\
-%\alpha bc & b^2 & \alpha ab \\
-%\beta ac & \alpha ab & a^2 
-%\end{bmatrix}$$
-%
-%The parameters used in this assignment is as follows:
-%$$ a=2,\quad b=3,\quad c=4,\quad \alpha=0.1,\quad \beta=0.2,\quad \#points = 200 $$
-%This resulted the covariance matrices to have the following values:
-%$$\Sigma_{X_1} = \begin{bmatrix}
-%4 & 1.2 & 0.8 \\
-%1.2 & 9 & 2.4 \\
-%0.8 & 2.4 & 16 
-%\end{bmatrix}, \quad \Sigma_{X_2} = \begin{bmatrix}
-%16 & 1.2 & 1.6 \\
-%1.2 & 9 & 0.6 \\
-%1.6 & 0.6 & 4 
-%\end{bmatrix}$$
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Create points for each distribution:}
-
-Here we used the same exact methods for creating the points from the previous assignment.
-And the plots of the points are available below.
-
-\begin{lstlisting}[label={list:first},caption=points generation]
-# create point matrices for the two classes X1 and X2
-z1_training_points, x1_training_points = h.generate_point_matrix(v_x1, lambda_x1, m1, number_of_points)
-z2_training_points, x2_training_points = h.generate_point_matrix(v_x2, lambda_x2, m2, number_of_points)
-\end{lstlisting}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Estimate the ML and BL:}
-
-To estimate the parameters for both data sets using ML:
-$$ \hat{M}=\frac{1}{N} \sum_{i=1}^{N} x_i, \quad\quad \hat{\Sigma}=	 frac{1}{N} \sum_{i=1}^{N}[X_i-\hat{M}][X_i-\hat{M}]^T$$
-
-
-\begin{lstlisting} [label={list:first},caption=ML and BL mean and covariance]
-def estimate_mean_ml(points, n):
-    points = np.array(points)
-    points = points[:, :n]
-    mean = np.sum(points, axis=1)
-    mean = mean / n
-    mean = np.array(mean)[np.newaxis]
-    return mean.transpose()
-
-def estimate_cov_ml(points, mean, n):
-    points = np.array(points)
-    mean = np.array(mean)
-    cov = (points - mean) @ (points - mean).transpose()
-    cov = cov / n
-    return cov
-
-def estimate_mean_bl(points, mean0, cov_initial, cov_actual, n):
-    points = np.array(points)
-    points = points[:, :n]
-    mean0 = np.array(mean0)
-    cov_initial = np.array(cov_initial)
-    cov_actual = np.array(cov_actual)
-    points_sum = np.sum(points, axis=1) / n
-    points_sum = np.array(points_sum)[np.newaxis]
-    points_sum = points_sum.transpose()
-
-    m = cov_actual / n @ np.linalg.inv(
-        cov_actual / n + cov_initial) @ mean0 + cov_initial @ np.linalg.inv(
-        cov_actual / n + cov_initial) @ points_sum
-    return m
-\end{lstlisting}
-
-And these were the results of ML:$$\hat{M_1} = \begin{bmatrix}
-3.22 \\ 1.23 \\ 4.16 
+We use the ML to estimate the parameters of the quadratic classifier, $M$ and $\Sigma_{X_1}$, for each class by using the equation:
+$$ \hat{M}= \frac{1}{N} \sum_{i=1}^{N} x_i, \quad\quad \hat{\Sigma}=	 \frac{1}{N} \sum_{i=1}^{N}[X_i-\hat{M}][X_i-\hat{M}]^T$$
+And the resulting means were the following for each class:
+$$\hat{M_1} = \begin{bmatrix}
+0.32673694 \\ 0.73383251 \\ 0.30892724 \\ 0.07688964 \\ 0.00946538 \\ 0.13256345
 \end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
--2.85 \\ 1.23 \\ -4.09 
+0.28480435 \\ 0.16341325 \\ 0.52232606 \\ 0.09011398 \\ 0.20292561 \\ 0.04536717
 \end{bmatrix}$$
-$$\hat{\sum_{X_1}} = \begin{bmatrix}
-4.30 & 1.22 & 1.29 \\
-1.22 & 9.81 & 2.35 \\
-1.29 & 2.35 & 14.49 
-\end{bmatrix}, \quad \hat{\sum_{X_2}} = \begin{bmatrix}
-17.75 & 0.97 & 2.57 \\
-0.97 & 8.48 & 1.21 \\
-2.57 & 1.21 & 4.13 
-\end{bmatrix}$$\\
+  and covariance matrices as follows: 
+  $$\Sigma_{X_1} = \begin{bmatrix}
+  0.0178 &-0.0149& -0.0061& -0.00291&  0.00349 & 0.0028\\
+ -0.0149&  0.0388&  0.0001&  0.00149& -0.00454 &-0.0053\\
+ -0.0061 & 0.0001 & 0.0101 & 0.00251 & 0.00161 & 0.0010\\
+ -0.0029 & 0.0014 & 0.0025 & 0.00123  &0.00003 & 0.0005\\
+  0.0034 &-0.0045 & 0.0016 & 0.00003  &0.00643 & 0.0027\\
+  0.0028 &-0.0053 & 0.0010 & 0.00051  &0.00270 & 0.0378
+\end{bmatrix},$$ $$\Sigma_{X_2} = \begin{bmatrix}
+  0.0159 & 0.0075 &-0.0086 &-0.0072& -0.0050 & 0.0033\\
+  0.0075 & 0.0589 &-0.0082 & 0.0017& -0.0056 & 0.0004\\
+ -0.0086 &-0.0082 & 0.0340 & 0.0120&  0.0125 & 0.0015\\
+  0.0072 & 0.0017 & 0.0120 & 0.0419& -0.0050 &-0.0014\\
+ -0.0050 &-0.0056 & 0.0125 &-0.0050&  0.0549 &-0.0032\\
+  0.0033 & 0.0004 & 0.0015 &-0.0014& -0.0032 & 0.0257
+\end{bmatrix}$$
 
+These values estimate parameter are gonna be our basis for any actual values needed or calculations that needs the real covariances(such as BL).
+Once we estimated the parameters, we were able to estimate the discriminant function and plot it in $(x1-x2)$ dimensions, as in Figure~\ref{fig:ml-disc-func}, before and after diagonalizing the data.
 
-Then we used BL to estimate the mean is using the following equation:
+After that we diagonalize the data and get the corresponding covariance matrices. For class 1 it becomes the identity matrix $I$ and for class 2 is the diagonal matrix of the following:
+$$\Sigma_{X_2} = \begin{bmatrix}
+  82.8012 & 11.2717 & 4.4823 & 3.0525 & 0.4904 & 0.6506
+\end{bmatrix}$$
+After that, we tested our classifier using five-cross validation and we got an average accuracy of 78.55\%. (97.57\% for class 1 and 17.81\% for class 2) for both before and after diagonalizing the data. We can see that the accuracy is skewed towards the first class more and that i believe due to three main reasons:
+\begin{itemize}
+	\item The data means are close to each other
+	\item The number of instance in each each are significantly different as class 1 is three times class 2
+	\item The correlation between the selected features and the classses
+\end{itemize}
+
+\begin{figure}
+\begin{center}
+	\subfigure[Before Diagonalizing ]{
+	\includegraphics[width=0.45\textwidth]{plots/ml-disc-func.png}
+	\label{absorbing}
+	}
+	\subfigure[After Diagonalizing]{
+	\includegraphics[width=0.45\textwidth]{plots/ml-disc-func-diag.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{ML Disc. Func. in x1-x2}
+\label{fig:ml-disc-func}
+\end{figure}
+
+\subsubsection*{Bayesian Learning (BL)}
+Next, we are going to estimate the means using BL method. In the calculating of the mean we used the following equation:
 $$\left(m\right)_n=\frac{1}{n}\Sigma\left[\frac{1}{n}\Sigma+\Sigma_0\right]^{-1}m_0+\Sigma_0\left[\frac{1}{n}\Sigma+\Sigma_0\right]^{-1}\left(\frac{1}{n}\sum_{j=1}^{n}x_j\right)$$
 
-The resulting means are as below:
+In the above equation, we used the estimated covariance from ML as the actual covariance in calculating the mean. Since we used that covariance, we had the resulting estimate mean pretty close with high precision to ML estimates.
 $$\hat{M_1} = \begin{bmatrix}
-3.22 \\ 1.24 \\ 4.13 
+0.32677967 \\ 0.73378739 \\ 0.30897436 \\ 0.07690064 \\ 0.00953297 \\ 0.13279159
 \end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
--2.85 \\ 1.23 \\ -4.10 
+0.28492792 \\ 0.16435958 \\ 0.52282895 \\ 0.09079785 \\ 0.20358894 \\ 0.04584223
+\end{bmatrix}$$
+
+Then we used these estimates to calculate the discriminant function which resulted in a similar result as the ML as it is shown in Figure~\ref{fig:bl-disc-func}.
+
+\begin{figure}
+\begin{center}
+	\subfigure[Before Diagonalizing]{
+	\includegraphics[width=0.45\textwidth]{plots/bl-disc-func.png}
+	\label{absorbing}
+	}
+	\subfigure[After Diagonalizing]{
+	\includegraphics[width=0.45\textwidth]{plots/bl-disc-func-diag.png}
+	\label{absorbing}
+	}
+\end{center}
+\caption{BL Disc. Func. in x1-x2}
+\label{fig:bl-disc-func}
+\end{figure}
+
+Since we got the same discriminant function(DF), in testing our DF, we got the same results are ML with an accuracy of 78.554\% for both before and after diagonalizing the data.
+
+\subsubsection*{Parzen Window}
+Next we use the Parzen window method to estimate the one feature only as requested and we used that to calculate the mean (estimate the density function) of the first feature (dimension). In Figure~\ref{fig:parzen} we can see the estimated mean for the first dimension for both classes how they are very close to each other. Parzen estimated means for all dimensions:
+$$\hat{M_1} = \begin{bmatrix}
+0.32673694 \\ 0.73383251 \\ 0.30892724 \\ 0.07688964 \\ 0.00946538 \\ 0.13256345
+\end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
+0.28480435 \\ 0.16341325 \\ 0.52232606 \\ 0.09011398 \\ 0.20292561 \\ 0.04536717
 \end{bmatrix}$$
 
 \begin{figure}
 \begin{center}
-	\subfigure[ML Mean]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}
-	\subfigure[ML Covariance]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}\\
-	\subfigure[BL Mean]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
+	\subfigure{
+	\includegraphics[width=0.45\textwidth]{plots/parzen-x1.png}
 	\label{absorbing}
 	}
 \end{center}
-\caption{Mean and covariance Convergances}
+\caption{Parzen Window}
+\label{fig:parzen}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Use Parzen window approach:}
-In this part we are going to use Parzen window, gaussian kernels, to estimate the means and density functions of each dimension. The kernel function used is:
-$$\hat{f_i}(x)=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-x_i)^2}{2\sigma^2}} $$
+\subsection{K-Nearest Neighbours Classifier}
+Next, we used the k-nearest neighbours classifier to classify the data. In our case we used $k=5$ and the algorithm calculates the distances between the test point and all other training points and takes the closest five points and votes on the majority of the classes of these points. Then the testing point is classified according to the majority class.
 
-The estimated mean:
-$$\hat{m}=\sum_{x}x\hat{f}(x)\Delta x $$
+Using K-NN, we reached the maximum accuracy we had for the data with a 90.18\% accuracy before diagonalizing and and accuracy of 85.89\% after diagonalizing the data. (Code is available online on the link provided in the beginning).
 
-The estimated covariance:
-$$\hat{\sigma}^2=\sum_{x}(x-\hat{m})^2\hat{f}(x)\Delta x$$
-
-\begin{lstlisting} [label={list:first},caption=Parzen window Code]
-def kernel_function(x, xi, cov):
-    result = (1 / (math.sqrt(2 * math.pi) * cov)) * math.exp(-math.pow(x - xi, 2) / (2 * math.pow(cov, 2)))
-    return result
-
-def parzen_expected_mean(x, f_x, delta_x):
-    return x * f_x * delta_x
-
-def parzen_expected_covariance(x, f_x, delta_x, mean):
-    return math.pow(x - mean, 2) * f_x * delta_x
-\end{lstlisting}
-
-And these were the results of Parzen:$$\hat{M_1} = \begin{bmatrix}
-3.19 \\ 1.21 \\ 4.12 
-\end{bmatrix},\quad \hat{M_2} = \begin{bmatrix}
--2.87 \\ 1.20 \\ -4.09 
+\subsection{Fisher's Discriminant Classifier}
+Then, we used the concept of Fisher's Discriminant to classify the data by finding a hyperplane that the point can be projected on and then find the linear classifier that can classify the data as accurate as possible.
+We calculated the vector $W$ that represents the plane that the points will be projected on:
+$$W = \begin{bmatrix}
+0.6697 \\ 5.5320 \\ -3.4231 \\ 0.4729 \\ -1.3701 \\ 1.871
 \end{bmatrix}$$
-$$\hat{\sum_{X_1}} = \begin{bmatrix}
-4.28 & 0 & 0 \\
-0 & 9.69 & 0 \\
-0 & 0 & 14.32 
-\end{bmatrix}, \quad \hat{\sum_{X_2}} = \begin{bmatrix}
-17.51 & 0 & 0 \\
-0 & 8.33 & 0 \\
-0 & 0 & 4.09 
-\end{bmatrix}$$\\
 
+And by using this transforming vector we get the points projected as in Figure~\ref{fig:fishers-disc} and we calculated the points of the discriminant function on that plane by solving the equation for one dimension instead of $d$ dimensions. After transforming the data the first and second class have means of 3.49242 and -0.84373 respectively.
 
 \begin{figure}
 \begin{center}
-	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
+	\subfigure[Before Diagonalizing]{
+	\includegraphics[width=0.45\textwidth]{plots/fishers-disc.png}
 	\label{absorbing}
 	}
-	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}\\
-	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
+	\subfigure[After Diagonalizing]{
+	\includegraphics[width=0.45\textwidth]{plots/fishers-disc-diag.png}
 	\label{absorbing}
 	}
 \end{center}
-\caption{Density Functions Estimation using Parzen Window}
+\caption{Fishers Discriminant}
+\label{fig:fishers-disc}
 \end{figure}
 
+By testing the linear classifier, we got an accuracy of 88.825\% before diagonalizing and 88.8251\% which is the same accuracy after diagonalizing.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Ho-Kashyap Classifier}
+In ho-kashyap, a linear classifier is created based on the points only by using the concept of gradient decent. The algorithm for it is in Listing 1
 
-\subsection{Compute Bayes discriminant function for ML, BL and Parzen:}
-Here I used the same code from the previous assignment to calculate the discriminant function for the three methods. And the results are in the figure below.
+\begin{lstlisting} [label={list:first},caption=Ho-Kashyap Code]
+def ho_kashyap(class1_data, class2_data):
+    class1_ones = np.ones(len(class1_data[0]))
+    class2_ones = np.ones(len(class2_data[0]))
 
-\begin{figure}
-\begin{center}
-	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}
-	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}\\
-	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}
-	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}\\
-	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}
-	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-	\includegraphics[width=0.45\textwidth]{plots/data-before-norm.png}
-	\label{absorbing}
-	}
-\end{center}
-\caption{Density Functions Estimation using Parzen Window}
-\end{figure}
+    y1 = np.array(class1_data)
+    y2 = np.array(class2_data)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    y1 = np.insert(y1, 0, class1_ones, axis=0)
+    y2 = np.insert(y2, 0, class2_ones, axis=0)
 
-\subsection{Use 10-Cross validation to test the classifiers:}
-We created 200 more points for each class so we have 400 points total for each class.\\
+    y1 = y1.transpose()
+    y2 = -1 * y2.transpose()
 
-\begin{lstlisting} [label={list:first},caption=K-cross validation]
-test_results_ml_class1 = []
-test_results_ml_class2 = []
+    y = np.append(y1, y2, axis=0)
 
-test_results_bl_class1 = []
-test_results_bl_class2 = []
+    a = np.ones((len(y[0]), 1))
+    b = np.ones((len(y), 1))
 
-test_results_parzen_class1 = []
-test_results_parzen_class2 = []
+    lr = 0.9  # learning rate
+    i = 0
+    e = y @ a - b
+    e1 = np.linalg.norm(e)
 
-k = 10
+    for i in range(400):
+        e = y @ a - b
+        b = b + lr * (e - np.abs(e))
+        a = np.linalg.inv(y.transpose() @ y) @ y.transpose() @ b
+        e1 = np.linalg.norm(e)
+        i = i + 1
 
-class1_total_points = v1_training_points
-class1_total_points = np.append(class1_total_points, v1_test_points, axis=1)
-
-class2_total_points = v2_training_points
-class2_total_points = np.append(class2_total_points, v2_test_points, axis=1)
-
-print(class1_total_points[:, 399])
-n = number_of_points + test_points_count
-for i in range(0, k, 1):
-    print('Cross:' + str(i+1))
-    number_of_testing_points = int(n / k)
-    number_of_training_points = int(n - n / k)
-    start = int(n * i / k)
-    end = int((i + 1) * n / k - 1)
-
-    class1_test_points = class1_total_points[:, start: end]
-    class1_train_points = class1_total_points[:, 0:start]
-    class1_train_points = np.append(class1_train_points, class1_total_points[:, end:], axis=1)
-
-    class2_test_points = class2_total_points[:, start: end]
-    class2_train_points = class2_total_points[:, 0:start]
-    class2_train_points = np.append(class2_train_points, class2_total_points[:, end:], axis=1)
-
-    # estimated mean using ML
-    x1_ml_estimated_mean = h.estimate_mean_ml(class1_train_points, number_of_training_points)
-    x1_ml_estimated_cov = h.estimate_cov_ml(class1_train_points, x1_ml_estimated_mean, number_of_training_points)
-
-    x2_ml_estimated_mean = h.estimate_mean_ml(class2_train_points, number_of_points)
-    x2_ml_estimated_cov = h.estimate_cov_ml(class2_train_points, x2_ml_estimated_mean, number_of_training_points)
-
-    # Estimating the means using BL
-    x1_bl_estimated_mean, x2_bl_estimated_mean = h.bl_expected_mean(class1_train_points, class2_train_points, sigma_v1, sigma_v2, v1_mean, v2_mean, number_of_training_points)
-
-    # estimated mean and cov using parzen window
-    x1_parzen_estimated_mean, x1_parzen_estimated_covariance, x2_parzen_estimated_mean, x2_parzen_estimated_covariance = h.estimated_mean_parzen(class1_train_points, class2_train_points, kernel_covariance, step_size)
-
-    ml_class1_accuracy, ml_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, x1_ml_estimated_cov, x2_ml_estimated_cov, x1_ml_estimated_mean, x2_ml_estimated_mean, number_of_testing_points)
-    test_results_ml_class1 = np.append(test_results_ml_class1, ml_class1_accuracy)
-    test_results_ml_class2 = np.append(test_results_ml_class2, ml_class2_accuracy)
-
-    bl_class1_accuracy, bl_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, sigma_v1, sigma_v2, x1_bl_estimated_mean, x2_bl_estimated_mean, number_of_testing_points)
-    test_results_bl_class1 = np.append(test_results_bl_class1, bl_class1_accuracy)
-    test_results_bl_class2 = np.append(test_results_bl_class2, bl_class2_accuracy)
-
-    parzen_class1_accuracy, parzen_class2_accuracy = h.test_classifier(class1_test_points, class2_test_points, x1_parzen_estimated_covariance, x2_parzen_estimated_covariance, x1_parzen_estimated_mean, x2_parzen_estimated_mean, number_of_testing_points)
-    test_results_parzen_class1 = np.append(test_results_parzen_class1, parzen_class1_accuracy)
-    test_results_parzen_class2 = np.append(test_results_parzen_class2, parzen_class2_accuracy)
+    return a, b
 \end{lstlisting}
 
-And the resulting testing accuracy is as follows:
-\begin{lstlisting} [label={list:first},caption=Accuracy before Diagonalization]
-ML Accuracy before Diagonalization:
-+---------+----------+
-|         | Accuracy |
-+---------+----------+
-| class 1 |  88.75   |
-| class 2 |  93.75   |
-+---------+----------+
+By using this method we solve for $A$ and $B$ until it converges and since the classes are not linearly separable, it will not find a line that separates them completely. and by updating the weights $A$, we reach an $A$ and $B$ such that the error is minimized.
 
-BL Accuracy before Diagonalization:
-+---------+----------+
-|         | Accuracy |
-+---------+----------+
-| class 1 |   89.5   |
-| class 2 |  94.25   |
-+---------+----------+
+The testing of the classifier was tested using same method used before, five-cross validation, and the accuracy before diagonalizing was 85.675\% and after diagonalizing 78.6424\%.
 
-Parzen Accuracy before Diagonalization:
-+---------+----------+
-|         | Accuracy |
-+---------+----------+
-| class 1 |  91.75   |
-| class 2 |   90.5   |
-+---------+----------+
-
-\end{lstlisting}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\break
-\subsection{Diagonalize the points and redo everything:}
-After diagonalizing the data, I will only include the results obtained using the same methods.
-
-%\begin{figure}
-%\begin{center}
-%	\subfigure[v1-v2]{
-%	\includegraphics[width=0.45\textwidth]{v1-v2-points.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[v1-v3]{
-%	\includegraphics[width=0.45\textwidth]{v1-v3-points.png}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{Training points after diagonalization}
-%\end{figure}
-%
-%\begin{figure}
-%\begin{center}
-%	\subfigure[ML Mean]{
-%	\includegraphics[width=0.45\textwidth]{ML-mean-convergance-after.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[ML Covariance]{
-%	\includegraphics[width=0.45\textwidth]{ML-cov-convergance-after.png}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[BL Mean]{
-%	\includegraphics[width=0.45\textwidth]{BL-mean-convergance-after.png}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{Mean and covariance Convergances after diagonalization}
-%\end{figure}
-%
-%\begin{figure}
-%\begin{center}
-%	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-density-estimation-parzen-after.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x2-density-estimation-parzen-after.png}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x3-density-estimation-parzen-after.png}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{Density Functions Estimation using Parzen Window after diagonalization}
-%\end{figure}
-%
-%\begin{figure}
-%\begin{center}
-%	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-ML-after.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-ML-after.png}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-BL-after.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[$x_1$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-BL-after.png}
-%	\label{absorbing}
-%	}\\
-%	\subfigure[$x_2$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x2-Disc-func-parzen-after.png}
-%	\label{absorbing}
-%	}
-%	\subfigure[$x_3$ estimated $\hat{f}(x)$]{
-%	\includegraphics[width=0.45\textwidth]{x1-x3-Disc-func-parzen-after.png}
-%	\label{absorbing}
-%	}
-%\end{center}
-%\caption{Discriminant Functions after diagonalization}
-%\end{figure}
-%\break
-%And the resulting testing accuracy is as follows:
-%\begin{lstlisting} [label={list:first},caption=Accuracy after Diagonalization]
-%ML Accuracy After Diagonalization:
-%+---------+----------+
-%|         | Accuracy |
-%+---------+----------+
-%| class 1 |  88.75   |
-%| class 2 |  93.75   |
-%+---------+----------+
-%
-%BL Accuracy after Diagonalization:
-%+---------+----------+
-%|         | Accuracy |
-%+---------+----------+
-%| class 1 |   89.5   |
-%| class 2 |   94.5   |
-%+---------+----------+
-%
-%Parzen Accuracy after Diagonalization:
-%+---------+----------+
-%|         | Accuracy |
-%+---------+----------+
-%| class 1 |   91.5   |
-%| class 2 |  92.25   |
-%+---------+----------+
-%
-%\end{lstlisting}
-
+\section*{Improvements}
+To make this system a full pattern classification system, some of the class handling is meant to deal with only two classes and that could be extended to include multiple classes classification. It can also include a way of cleaning the data by removing outliers and removing the noisy data and that could help create a better classifier.  
 \end{document}  
 
 

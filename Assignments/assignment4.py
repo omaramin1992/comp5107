@@ -373,7 +373,7 @@ class2_total_points = np.append(class2_total_points, x2_test_points, axis=1)
 print(class1_total_points[:, 399])
 n = number_of_points + test_points_count
 for i in range(0, k, 1):
-    print('Cross:' + str(i+1))
+    print('Cross:' + str(i + 1))
     number_of_testing_points = int(n / k)
     number_of_training_points = int(n - n / k)
     start = int(n * i / k)
@@ -751,11 +751,11 @@ class2_total_points = np.append(class2_total_points, v2_test_points, axis=1)
 print(class1_total_points[:, 399])
 n = number_of_points + test_points_count
 for i in range(0, k, 1):
-    print('Cross:' + str(i+1))
+    print('Cross:' + str(i + 1))
     number_of_testing_points = int(n / k)
     number_of_training_points = int(n - n / k)
     start = int(n * i / k)
-    end = int((i + 1) * n / k - 1)
+    end = int((i + 1) * n / k)
 
     class1_test_points = class1_total_points[:, start: end]
     class1_train_points = class1_total_points[:, 0:start]
@@ -769,7 +769,7 @@ for i in range(0, k, 1):
     x1_ml_estimated_mean = h.estimate_mean_ml(class1_train_points, number_of_training_points)
     x1_ml_estimated_cov = h.estimate_cov_ml(class1_train_points, x1_ml_estimated_mean, number_of_training_points)
 
-    x2_ml_estimated_mean = h.estimate_mean_ml(class2_train_points, number_of_points)
+    x2_ml_estimated_mean = h.estimate_mean_ml(class2_train_points, number_of_training_points)
     x2_ml_estimated_cov = h.estimate_cov_ml(class2_train_points, x2_ml_estimated_mean, number_of_training_points)
 
     # Estimating the means using BL

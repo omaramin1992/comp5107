@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.6)  22 APR 2018 13:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.6)  22 APR 2018 21:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -355,12 +355,6 @@ LaTeX Warning: Label `absorbing' multiply defined.
 LaTeX Warning: Label `sub@absorbing' multiply defined.
 
 
-LaTeX Warning: Label `list:first' multiply defined.
-
-
-LaTeX Warning: Label `list:first' multiply defined.
-
-
 LaTeX Warning: Label `absorbing' multiply defined.
 
 
@@ -397,46 +391,10 @@ LaTeX Warning: Label `absorbing' multiply defined.
 LaTeX Warning: Label `sub@absorbing' multiply defined.
 
 
-LaTeX Warning: Label `list:first' multiply defined.
-
-
 LaTeX Warning: Label `absorbing' multiply defined.
 
 
 LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `absorbing' multiply defined.
-
-
-LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `absorbing' multiply defined.
-
-
-LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `absorbing' multiply defined.
-
-
-LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `absorbing' multiply defined.
-
-
-LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `absorbing' multiply defined.
-
-
-LaTeX Warning: Label `sub@absorbing' multiply defined.
-
-
-LaTeX Warning: Label `list:first' multiply defined.
 
 )
 \openout1 = `project-report.aux'.
@@ -557,95 +515,72 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <plots/data-before-norm.png, id=1, 642.4pt x 481.8pt>
 File: plots/data-before-norm.png Graphic file (type png)
 <use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 82.
+Package pdftex.def Info: plots/data-before-norm.png  used on input line 84.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 86.
+<plots/data-after-norm.png, id=2, 642.4pt x 481.8pt>
+File: plots/data-after-norm.png Graphic file (type png)
+<use plots/data-after-norm.png>
+Package pdftex.def Info: plots/data-after-norm.png  used on input line 88.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
  [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./plots/data-before-norm.png (PNG copy)>] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
-
- []
-
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 219.
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2 <./plots/data-before-norm.png (PNG copy)> <./plots/data-after-norm.png (PNG copy)>]
+<plots/ml-disc-func.png, id=24, 642.4pt x 481.8pt>
+File: plots/ml-disc-func.png Graphic file (type png)
+<use plots/ml-disc-func.png>
+Package pdftex.def Info: plots/ml-disc-func.png  used on input line 149.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 223.
+<plots/ml-disc-func-diag.png, id=25, 642.4pt x 481.8pt>
+File: plots/ml-disc-func-diag.png Graphic file (type png)
+<use plots/ml-disc-func-diag.png>
+Package pdftex.def Info: plots/ml-disc-func-diag.png  used on input line 153.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 227.
+ [3]
+<plots/bl-disc-func.png, id=30, 642.4pt x 481.8pt>
+File: plots/bl-disc-func.png Graphic file (type png)
+<use plots/bl-disc-func.png>
+Package pdftex.def Info: plots/bl-disc-func.png  used on input line 177.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
-
- []
-
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 276.
+<plots/bl-disc-func-diag.png, id=31, 642.4pt x 481.8pt>
+File: plots/bl-disc-func-diag.png Graphic file (type png)
+<use plots/bl-disc-func-diag.png>
+Package pdftex.def Info: plots/bl-disc-func-diag.png  used on input line 181.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 280.
+ [4 <./plots/ml-disc-func.png (PNG copy)> <./plots/ml-disc-func-diag.png (PNG copy)>]
+<plots/parzen-x1.png, id=35, 642.4pt x 481.8pt>
+File: plots/parzen-x1.png Graphic file (type png)
+<use plots/parzen-x1.png>
+Package pdftex.def Info: plots/parzen-x1.png  used on input line 202.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 284.
+ [5 <./plots/bl-disc-func.png (PNG copy)> <./plots/bl-disc-func-diag.png (PNG copy)>]
+<plots/fishers-disc.png, id=39, 642.4pt x 481.8pt>
+File: plots/fishers-disc.png Graphic file (type png)
+<use plots/fishers-disc.png>
+Package pdftex.def Info: plots/fishers-disc.png  used on input line 227.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 300.
+<plots/fishers-disc-diag.png, id=40, 642.4pt x 481.8pt>
+File: plots/fishers-disc-diag.png Graphic file (type png)
+<use plots/fishers-disc-diag.png>
+Package pdftex.def Info: plots/fishers-disc-diag.png  used on input line 231.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 304.
-(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 308.
-(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 312.
-(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 316.
-(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-File: plots/data-before-norm.png Graphic file (type png)
-<use plots/data-before-norm.png>
-Package pdftex.def Info: plots/data-before-norm.png  used on input line 320.
-(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
-
- []
-
-[7] [8] [9] [10] [11] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.aux)
+ [6 <./plots/parzen-x1.png (PNG copy)>] [7 <./plots/fishers-disc.png (PNG copy)> <./plots/fishers-disc-diag.png (PNG copy)>] [8] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6344 strings out of 492982
- 91442 string characters out of 6132528
- 280651 words of memory out of 5000000
- 9806 multiletter control sequences out of 15000+600000
- 15273 words of font info for 60 fonts, out of 8000000 for 9000
+ 6305 strings out of 492982
+ 90975 string characters out of 6132528
+ 253651 words of memory out of 5000000
+ 9762 multiletter control sequences out of 15000+600000
+ 14027 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,7n,40p,519b,1555s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.pdf" (11 pages, 226047 bytes).
+ 41i,7n,40p,629b,1663s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.pdf" (8 pages, 404007 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 81 compressed objects within 1 object stream
+ 101 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 

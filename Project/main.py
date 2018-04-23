@@ -392,6 +392,8 @@ test_results_fd_class1, test_results_fd_class2 = ts.fd_k_cross_validation(class1
                                                                           class1_instances_count,
                                                                           class2_instances_count, w, p1, p2)
 
+print('W:', w)
+
 title = 'After diagonalizing'
 mat_plt.plot(class1_data_diag[0], class1_data_diag[1], 'b.', label="Class 1", alpha=0.5)
 mat_plt.plot(class2_data_diag[0], class2_data_diag[1], 'r.', label="Class 2", alpha=0.5)
@@ -430,6 +432,10 @@ test_results_fd_class1_diag, test_results_fd_class2_diag = ts.fd_k_cross_validat
                                                                                     class1_instances_count,
                                                                                     class2_instances_count, w_diag, p1,
                                                                                     p2)
+print('FD Mean1:', fd_mean1)
+print('FD Mean1 Diag:', fd_mean1_diag)
+print('FD Mean2:', fd_mean2)
+print('FD Mean2 Diag:', fd_mean2_diag)
 
 # print test results
 print('\nFisher\'s Disc. Accuracy after diagonalizing:')
