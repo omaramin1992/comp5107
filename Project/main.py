@@ -477,3 +477,50 @@ x.field_names = ["Prd\\Tr", "Accuracy"]
 x.add_row(["class 1", np.mean(test_results_hk_class1_diag)])
 x.add_row(["class 2", np.mean(test_results_hk_class2_diag)])
 print(x)
+
+a, b = hk.ho_kashyap(class1_data, class2_data)
+print('A:', a[0][0], a[1][0])
+# x = np.array(x_range)
+# y = eval(formula)
+# plt.plot(x, y)
+# plt.show()
+
+formula = "{}*x+{}".format(a[1][0], a[0][0])
+x = np.array(range(0, 2))
+y = eval(formula)
+
+mat_plt.plot(class1_data[0], class1_data[1], 'b.', label="Class 1", alpha=0.5)
+mat_plt.plot(class2_data[0], class2_data[1], 'r.', label="Class 2", alpha=0.5)
+mat_plt.plot(x, y, 'g--', label="Disc. Func.")
+mat_plt.xlabel('x1')
+mat_plt.ylabel('x2')
+mat_plt.title('Ho-Kashyap')
+mat_plt.legend(loc=2)
+mat_plt.grid(linestyle='dotted')
+mat_plt.show()
+
+
+def my_formula(x, a1, b1):
+    return x*a1+b1
+
+
+a_diag, b_diag = hk.ho_kashyap(class1_data_diag, class2_data_diag)
+print('A:', a_diag[0][0], a_diag[1][0])
+# x = np.array(x_range)
+# y = eval(formula)
+# plt.plot(x, y)
+# plt.show()
+
+# formula_diag = "{}*x+{}".format(a_diag[1][0], a_diag[0][0])
+x_diag = np.array(range(-10, 40))
+y_diag = my_formula(x_diag, a_diag[1][0], a_diag[0][0])
+
+mat_plt.plot(class1_data_diag[0], class1_data_diag[1], 'b.', label="Class 1", alpha=0.5)
+mat_plt.plot(class2_data_diag[0], class2_data_diag[1], 'r.', label="Class 2", alpha=0.5)
+mat_plt.plot(x_diag, y_diag, 'g--', label="Disc. Func.")
+mat_plt.xlabel('x1')
+mat_plt.ylabel('x2')
+mat_plt.title('Ho-Kashyap')
+mat_plt.legend(loc=2)
+mat_plt.grid(linestyle='dotted')
+mat_plt.show()

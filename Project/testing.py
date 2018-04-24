@@ -372,7 +372,8 @@ def hk_k_cross_validation(class1_data, class2_data, k, n1, n2):
     test_results_hk_class2 = []
 
     accuracies = []
-
+    a = []
+    # b = []
     for i in range(0, k, 1):
         print('Cross:' + str(i + 1))
         class1_testing_points_count = int(n1 / k)
@@ -392,20 +393,6 @@ def hk_k_cross_validation(class1_data, class2_data, k, n1, n2):
         class2_test_points = class2_data[:, class2_start: class2_end]
         class2_train_points = class2_data[:, 0:class2_start]
         class2_train_points = np.append(class2_train_points, class2_data[:, class2_end:], axis=1)
-
-        # class1_ml_est_mean = ml.estimate_mean_ml(class1_train_points, len(class1_train_points[0]))
-        # class1_ml_est_cov = ml.estimate_cov_ml(class1_train_points, class1_ml_est_mean,
-        #                                        class1_training_points_count)
-        #
-        # class2_ml_est_mean = ml.estimate_mean_ml(class2_train_points, len(class2_train_points[0]))
-        # class2_ml_est_cov = ml.estimate_cov_ml(class2_train_points, class2_ml_est_mean,
-        #                                        class2_training_points_count)
-        #
-        # fd_mean1 = w.transpose() @ class1_ml_est_mean
-        # fd_mean2 = w.transpose() @ class2_ml_est_mean
-        #
-        # fd_cov1 = w.transpose() @ class1_ml_est_cov @ w
-        # fd_cov2 = w.transpose() @ class2_ml_est_cov @ w
 
         a, b = hk.ho_kashyap(class1_train_points, class2_train_points)
 
@@ -448,5 +435,6 @@ def hk_k_cross_validation(class1_data, class2_data, k, n1, n2):
         accuracies = np.append(accuracies, accuracy)
         print(accuracy)
 
+        # hk.plot_disc(a[0],)
     print('\nHo-Kashyap Average Accuracy:', np.mean(accuracies))
     return test_results_hk_class1, test_results_hk_class2

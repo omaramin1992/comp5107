@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.6)  22 APR 2018 21:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.3.6)  23 APR 2018 16:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -396,6 +396,18 @@ LaTeX Warning: Label `absorbing' multiply defined.
 
 LaTeX Warning: Label `sub@absorbing' multiply defined.
 
+
+LaTeX Warning: Label `absorbing' multiply defined.
+
+
+LaTeX Warning: Label `sub@absorbing' multiply defined.
+
+
+LaTeX Warning: Label `absorbing' multiply defined.
+
+
+LaTeX Warning: Label `sub@absorbing' multiply defined.
+
 )
 \openout1 = `project-report.aux'.
 
@@ -563,24 +575,34 @@ File: plots/fishers-disc-diag.png Graphic file (type png)
 <use plots/fishers-disc-diag.png>
 Package pdftex.def Info: plots/fishers-disc-diag.png  used on input line 231.
 (pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
- [6 <./plots/parzen-x1.png (PNG copy)>] [7 <./plots/fishers-disc.png (PNG copy)> <./plots/fishers-disc-diag.png (PNG copy)>] [8] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.aux)
+<plots/hk-disc.png, id=41, 642.4pt x 481.8pt>
+File: plots/hk-disc.png Graphic file (type png)
+<use plots/hk-disc.png>
+Package pdftex.def Info: plots/hk-disc.png  used on input line 251.
+(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
+<plots/hk-disc-diag.png, id=42, 642.4pt x 481.8pt>
+File: plots/hk-disc-diag.png Graphic file (type png)
+<use plots/hk-disc-diag.png>
+Package pdftex.def Info: plots/hk-disc-diag.png  used on input line 255.
+(pdftex.def)             Requested size: 193.50076pt x 145.12189pt.
+ [6 <./plots/parzen-x1.png (PNG copy)>] [7 <./plots/fishers-disc.png (PNG copy)> <./plots/fishers-disc-diag.png (PNG copy)> <./plots/hk-disc.png (PNG copy)> <./plots/hk-disc-diag.png (PNG copy)>] [8] (/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6305 strings out of 492982
- 90975 string characters out of 6132528
- 253651 words of memory out of 5000000
- 9762 multiletter control sequences out of 15000+600000
- 14027 words of font info for 55 fonts, out of 8000000 for 9000
+ 6139 strings out of 492982
+ 89486 string characters out of 6132528
+ 181651 words of memory out of 5000000
+ 9597 multiletter control sequences out of 15000+600000
+ 11992 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,7n,40p,629b,1663s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.pdf" (8 pages, 404007 bytes).
+ 41i,7n,40p,629b,318s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on "/Users/omarghaleb/Dropbox/Carleton/Masters/3-Winter2018/COMP 5107/project-report/.texpadtmp/project-report.pdf" (8 pages, 441973 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 99 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
